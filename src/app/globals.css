@@ -1,4 +1,7 @@
 @import "tailwindcss";
+/* @tailwind base; */
+/* @tailwind components; */
+@tailwind utilities;
 
 @theme {
   --font-sans: var(--font-geist-sans);
@@ -18,7 +21,62 @@
 }
 
 body {
-  color: var(--foreground);
+  /* color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, Helvetica, sans-serif; */
+}
+
+/* Réinitialisation des marges par défaut pour prose */
+.prose :where(* + *) {
+  margin-top: 1.25em; /* Espacement uniforme entre tous les éléments */
+}
+
+/* Ajustements spécifiques */
+.prose h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem; /* Gardé pour un peu plus d’espace après h1 */
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.prose h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Style pour les images */
+.prose img {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+/* Style pour les blocs de code */
+.prose pre {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  padding: 1rem;
+  background-color: #1e293b; /* Fond sombre cohérent avec vscDarkPlus */
+  border-radius: 0.5rem;
+}
+
+/* Animation de flou à net */
+@keyframes fadeInBlur {
+  0% {
+    opacity: 0; /* Visible dès le début de l’animation */
+    filter: blur(20px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* Classe réutilisable pour les éléments animés */
+.fade-in-blur {
+  opacity: 0; /* Invisible avant l’animation */
+  animation: fadeInBlur 0.8s ease-out forwards;
 }
