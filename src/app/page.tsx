@@ -1,11 +1,7 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import Image from "next/image";
 import FadeInBlur from "./components/FadeInBlur";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
-
   return (
     <div className="min-h-screen">
       <div className="pt-16">

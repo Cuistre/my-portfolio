@@ -1,6 +1,6 @@
 import { db, articles } from "@/app/lib/db";
 import { eq } from "drizzle-orm";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown from "react-markdown"; // Retiré Components, inutile ici
 import { notFound, redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -8,8 +8,15 @@ import Link from "next/link";
 import Image from "next/image";
 import DeleteConfirmPopup from "@/app/components/DeleteConfirmPopup";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism"; // Thème VSCode sombre
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import FadeInBlur from "@/app/components/FadeInBlur";
+
+// Typage pour les props de code, compatible avec ReactMarkdown
+interface CodeProps extends React.HTMLAttributes<HTMLElement> {
+  inline?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+}
 
 export default async function ArticlePage({
   params,
@@ -54,7 +61,6 @@ export default async function ArticlePage({
         <div className="prose prose-lg prose-invert">
           <ReactMarkdown
             components={{
-              // Surcharge pour les images
               img: ({ src, alt }) => (
                 <Image
                   src={src || ""}
@@ -64,18 +70,17 @@ export default async function ArticlePage({
                   className="rounded-lg mx-auto"
                 />
               ),
-              // Surcharge pour les blocs de code
-              code({ node, inline, className, children, ...props }) {
+              code: ({ inline, className, children, ...props }: CodeProps) => {
                 const match = /language-(\w+)/.exec(className || "");
                 return !inline && match ? (
                   <SyntaxHighlighter
-                    style={vscDarkPlus} // Thème sombre VSCode
-                    language={match[1]} // Ex. "json", "ts"
-                    PreTag="div" // Remplace <pre> par <div> pour éviter des conflits
+                    style={vscDarkPlus}
+                    language={match[1]}
+                    PreTag="div"
                     className="rounded-md"
                     {...props}
                   >
-                    {String(children).replace(/\n$/, "")}
+                    {String(children || "").replace(/\n$/, "")}
                   </SyntaxHighlighter>
                 ) : (
                   <code className={className} {...props}>

@@ -1,13 +1,29 @@
-import NextAuth from "next-auth";
+import NextAuth, {
+  type NextAuthOptions,
+  type User,
+  type Session,
+} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 import { db, users } from "@/app/lib/db";
 import { eq } from "drizzle-orm";
-import { NextRequest, NextResponse } from "next/server";
+import { type JWT } from "next-auth/jwt";
+
+// Étendre les interfaces de NextAuth pour inclure l’id
+interface CustomUser extends User {
+  id: string;
+}
+
+interface CustomSession extends Session {
+  user?: Session["user"] & { id?: string }; // user est optionnel et id aussi
+}
+
+interface CustomJWT extends JWT {
+  id?: string;
+}
 
 // Configuration de NextAuth
-export const authOptions = {
-  // Exporté ici
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -36,7 +52,7 @@ export const authOptions = {
           if (!isPasswordValid) {
             return null;
           }
-          const userData = {
+          const userData: CustomUser = {
             id: user[0].id.toString(),
             name: "Admin",
             email: user[0].email,
@@ -55,14 +71,25 @@ export const authOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user }: { token: CustomJWT; user?: CustomUser }) {
       if (user) {
         token.id = user.id;
       }
       return token;
     },
-    async session({ session, token }) {
-      if (token?.id) {
+    async session({
+      session,
+      token,
+    }: {
+      session: CustomSession;
+      token: CustomJWT;
+    }): Promise<CustomSession> {
+      if (token.id) {
+        // Si session.user n’existe pas, on l’initialise avec un objet vide
+        if (!session.user) {
+          session.user = {};
+        }
+        // Assigner l’id au user
         session.user.id = token.id;
       }
       return session;
