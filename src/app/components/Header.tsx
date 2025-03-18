@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
-  faFlag,
-  faFlagUsa,
   faBars,
   faTimes,
   faMagnifyingGlass,
@@ -15,7 +13,6 @@ import { signOut, useSession } from "next-auth/react";
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [language, setLanguage] = useState("fr");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();
@@ -26,10 +23,6 @@ export default function Header() {
       router.push(`/search?q=${encodeURIComponent(searchQuery)}`);
       setSearchQuery("");
     }
-  };
-
-  const toggleLanguage = () => {
-    setLanguage(language === "fr" ? "en" : "fr");
   };
 
   const toggleMenu = () => {
