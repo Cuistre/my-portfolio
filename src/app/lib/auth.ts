@@ -5,13 +5,18 @@ import { db, users } from "@/app/lib/db";
 import { eq } from "drizzle-orm";
 import { type JWT } from "next-auth/jwt";
 
-// Étendre les interfaces de NextAuth pour inclure l’id
+// Interfaces personnalisées alignées avec next-auth.d.ts
 interface CustomUser extends User {
   id: string;
 }
 
 interface CustomSession extends Session {
-  user?: Session["user"] & { id?: string }; // user est optionnel et id aussi
+  user: {
+    id: string;
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+  };
 }
 
 interface CustomJWT extends JWT {
@@ -80,12 +85,13 @@ export const authOptions: NextAuthOptions = {
       session: CustomSession;
       token: CustomJWT;
     }): Promise<CustomSession> {
-      if (token.id) {
-        if (!session.user) {
-          session.user = {};
-        }
-        session.user.id = token.id;
-      }
+      // user est maintenant garanti présent grâce à next-auth.d.ts
+      session.user = {
+        id: token.id!, // On sait que token.id existe après authorize
+        name: session.user?.name || null,
+        email: session.user?.email || null,
+        image: session.user?.image || null,
+      };
       return session;
     },
   },
