@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, cloneElement } from "react";
+import { ReactNode, cloneElement, isValidElement } from "react";
 
 export default function FadeInBlur({
   children,
@@ -10,17 +10,17 @@ export default function FadeInBlur({
   delay?: number;
 }) {
   // Vérifie que children est un élément React valide
-  if (!children || typeof children !== "object") {
+  if (!isValidElement(children)) {
     return <>{children}</>;
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const child = children as React.ReactElement<any>;
 
   // Clone l’élément enfant et ajoute la classe et le style
-  return cloneElement(children as React.ReactElement, {
-    className: `${
-      (children as React.ReactElement).props.className || ""
-    } fade-in-blur`,
+  return cloneElement(child, {
+    className: `${child.props.className || ""} fade-in-blur`,
     style: {
-      ...(children as React.ReactElement).props.style,
+      ...child.props.style,
       animationDelay: `${delay}s`,
     },
   });
