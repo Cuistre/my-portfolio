@@ -4,7 +4,7 @@ import "./globals.css";
 import Header from "./components/Header";
 import SessionWrapper from "./components/SessionWrapper";
 import { getServerSession } from "next-auth"; // Import correct pour la session
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"; // Import des options d’auth
+import { authOptions } from "./lib/auth";
 import Footer from "./components/Footer";
 
 const geistSans = Geist({
