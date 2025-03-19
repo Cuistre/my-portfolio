@@ -10,6 +10,7 @@ import DeleteConfirmPopup from "@/app/components/DeleteConfirmPopup";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import FadeInBlur from "@/app/components/FadeInBlur";
+import { type NextPage } from "next"; // Importer les types officiels
 
 // Typage pour les props de code, compatible avec ReactMarkdown
 interface CodeProps extends React.HTMLAttributes<HTMLElement> {
@@ -18,13 +19,14 @@ interface CodeProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode;
 }
 
-// Typage minimal pour une page dynamique asynchrone avec Next.js
-export default async function ArticlePage({
-  params,
-}: {
+// Typage explicite pour une page dynamique avec Next.js
+export type ArticlePageProps = {
   params: { id: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
-}) {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+// Utiliser NextPage pour typer correctement
+const ArticlePage: NextPage<ArticlePageProps> = async ({ params }) => {
   const articleId = parseInt(params.id);
   const session = await getServerSession(authOptions);
 
@@ -111,4 +113,6 @@ export default async function ArticlePage({
       )}
     </div>
   );
-}
+};
+
+export default ArticlePage;
