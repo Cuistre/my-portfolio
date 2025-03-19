@@ -18,7 +18,7 @@ interface CodeProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode;
 }
 
-// Typage minimal pour une page dynamique asynchrone
+// Typage minimal pour une page dynamique asynchrone avec Next.js
 export default async function ArticlePage({
   params,
 }: {
