@@ -37,10 +37,10 @@ export default async function Write({
     const content = formData.get("content") as string;
     const imageName = formData.get("imageName") as string | null; // Juste le nom, pas d’URL
     const summary = formData.get("summary") as string | null;
-    const authorId = parseInt(session.user.id);
+    const authorId = parseInt(session!.user!.id);
 
     if (isNaN(authorId)) {
-      throw new Error("authorId invalide : " + session.user.id);
+      throw new Error("authorId invalide : " + session!.user!.id);
     }
 
     if (editId) {
