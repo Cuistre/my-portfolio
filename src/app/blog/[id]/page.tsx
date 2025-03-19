@@ -1,6 +1,6 @@
 import { db, articles } from "@/app/lib/db";
 import { eq } from "drizzle-orm";
-import ReactMarkdown from "react-markdown"; // Retiré Components, inutile ici
+import ReactMarkdown from "react-markdown";
 import { notFound, redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/lib/auth";
@@ -18,11 +18,13 @@ interface CodeProps extends React.HTMLAttributes<HTMLElement> {
   children?: React.ReactNode;
 }
 
-export default async function ArticlePage({
-  params,
-}: {
+// Typage correct pour une page dynamique dans l’App Router
+interface PageProps {
   params: { id: string };
-}) {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
+
+export default async function ArticlePage({ params }: PageProps) {
   const articleId = parseInt(params.id);
   const session = await getServerSession(authOptions);
 
