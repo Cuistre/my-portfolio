@@ -42,7 +42,6 @@ export const authOptions: NextAuthOptions = {
             .from(users)
             .where(eq(users.email, credentials.email))
             .limit(1);
-          console.log("Utilisateur trouvé :", user);
           if (!user.length) {
             return null;
           }
@@ -62,6 +61,7 @@ export const authOptions: NextAuthOptions = {
           return userData;
         } catch (error) {
           console.error("Erreur dans authorize :", error);
+          throw error;
           return null;
         }
       },
@@ -73,7 +73,6 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET || "default-secret-for-local-dev",
   callbacks: {
     async jwt({ token, user }: { token: CustomJWT; user?: CustomUser }) {
-      console.log("JWT Callback - token:", token, "user:", user);
       if (user) {
         token.id = user.id;
       }
@@ -87,7 +86,6 @@ export const authOptions: NextAuthOptions = {
       token: CustomJWT;
     }): Promise<CustomSession> {
       // user est maintenant garanti présent grâce à next-auth.d.ts
-      console.log("Session Callback - session:", session, "token:", token);
       session.user = {
         id: token.id!, // On sait que token.id existe après authorize
         name: session.user?.name || null,
