@@ -1,8 +1,15 @@
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import Database from "better-sqlite3";
 import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
+import path from "path";
 
-const sqlite = new Database("sqlite.db");
+const dbPath =
+  process.env.NODE_ENV === "production"
+    ? path.join(process.cwd(), "sqlite.db") // Chemin absolu en prod
+    : "sqlite.db"; // Relatif en dev
+
+console.log("Opening SQLite database at:", dbPath);
+const sqlite = new Database(dbPath);
 console.log(
   "SQLite connected, tables:",
   sqlite.prepare("SELECT name FROM sqlite_master WHERE type='table';").all()
@@ -27,6 +34,6 @@ export const articles = sqliteTable("articles", {
   authorId: integer("author_id")
     .notNull()
     .references(() => users.id),
-  imageUrl: text("image_url"), // Nouvelle colonne pour l’URL de la photo
-  summary: text("summary"), // Nouvelle colonne pour le résumé
+  imageUrl: text("image_url"),
+  summary: text("summary"),
 });
