@@ -3,6 +3,10 @@ import Database from "better-sqlite3";
 import { text, integer, sqliteTable } from "drizzle-orm/sqlite-core";
 
 const sqlite = new Database("sqlite.db");
+console.log(
+  "SQLite connected, tables:",
+  sqlite.prepare("SELECT name FROM sqlite_master WHERE type='table';").all()
+);
 export const db = drizzle(sqlite);
 
 // Table utilisateurs
