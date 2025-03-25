@@ -7,7 +7,7 @@ export default async function Home() {
       <div className="pt-16">
         <FadeInBlur delay={0}>
           <h1 className="text-4xl font-bold text-center mb-12">
-            Bienvenue sur mon blog 23
+            Bienvenue sur mon blog 24
           </h1>
         </FadeInBlur>
         <div className="max-w-5xl my-24 mx-auto px-4 flex flex-col md:flex-row gap-8">
