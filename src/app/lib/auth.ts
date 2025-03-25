@@ -70,9 +70,10 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login",
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || "default-secret-for-local-dev",
   callbacks: {
     async jwt({ token, user }: { token: CustomJWT; user?: CustomUser }) {
+      console.log("JWT Callback - token:", token, "user:", user);
       if (user) {
         token.id = user.id;
       }
@@ -86,6 +87,7 @@ export const authOptions: NextAuthOptions = {
       token: CustomJWT;
     }): Promise<CustomSession> {
       // user est maintenant garanti présent grâce à next-auth.d.ts
+      console.log("Session Callback - session:", session, "token:", token);
       session.user = {
         id: token.id!, // On sait que token.id existe après authorize
         name: session.user?.name || null,
