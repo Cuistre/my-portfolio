@@ -7,8 +7,8 @@ import SessionWrapper from "./components/SessionWrapper";
 import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
-  title: "Mon Portfolio",
-  description: "Mon application Next.js avec un header stylé",
+  title: "My Blog",
+  description: "Gaultier Hym - Technical Blog",
 };
 
 export default async function RootLayout({
