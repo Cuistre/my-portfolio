@@ -11,11 +11,13 @@ SPOILER : OUI !
 
 ## Introduction : une observation qui pose question
 
-Bertrand observe que deux joueurs de Liverpool tirent leurs penaltys très souvent du même côté. Gigi, le gardien, peut avoir le raisonnement suivant : « Je remarque cette tendance, je peux donc plonger de ce côté pour maximiser mes chances d’arrêt. »
+Mon oncle observe que deux joueurs de Liverpool tirent leurs penaltys très souvent du même côté. Gigi, le gardien, peut avoir le raisonnement suivant : « Je remarque cette tendance, je peux donc plonger de ce côté pour maximiser mes chances d’arrêt. »
 
-Mais Bertrand se demande : « Les joueurs ont-ils eu tort de persister dans leur habitude ? N’auraient-ils pas dû changer de côté ? » Et Gigi, s’il est malin, pourrait anticiper ce changement et ajuster son plongeon en conséquence. Mais alors, si les tireurs savent que Gigi sait… où cela s’arrête-t-il ?
+Mon oncle se demande alors : « Les joueurs ont-ils eu tort de persister dans leur habitude ? N’auraient-ils pas dû changer de côté ? » Mais Gigi, alors, pourrait anticiper ce changement et ajuster son plongeon en conséquence. Oui, mais si les tireurs savent que Gigi sait… où cela s’arrête-t-il ?
 
-Ce va-et-vient mental est un phénomène classique en théorie des jeux, appelé **levelling** . On le retrouve dans des jeux comme pierre-feuille-ciseaux ou le poker : « Je sais que tu sais que je sais que tu sais… » Par exemple, au poker, si je bluffe, c’est parce que je pense que tu penses que je ne bluffe pas. Le levelling consiste à deviner le niveau de réflexion de l’adversaire pour se placer juste au-dessus. Mais en pratique, sauf face à un adversaire prévisible (par exemple, quelqu’un qui raisonne au premier degré), ce raisonnement tourne vite en boucle et dépend beaucoup du hasard.
+La remarque montre bien les limites du raisonnement de David Wall exposé dans son tweet. David Wall croit que Gigi savait où les tireurs allaient tirer. En réalité, il n'en savait rien. Nunez aurait très bien pu se dire "Allez, c'est le peno de ma vie, je sais que Gigi regarde les stats, je vais décider de changer mes habitudes." Le fait qu'un joueur ait tiré 85% de ses penaltys à droite ne signifie pas qu'il y a 85% de probabilités qu'il tire encore à droite dans une situation précise. Les 85% de penaltys tirés à droite, c'est une statistique. Pas une probabilité. Ce n'est pas la même chose. C'est lié, évidemment, mais ce n'est pas la même chose.
+
+Ce va-et-vient mental (il sait que je sais qu'il sait que je sais...) est un phénomène classique en théorie des jeux, appelé **levelling** . On le retrouve dans des jeux comme pierre-feuille-ciseaux ou le poker : « Je sais que tu sais que je sais que tu sais que tu vas jouer feuille… » Par exemple, au poker, si je bluffe, c’est parce que je pense que tu penses que je ne bluffe pas. Le levelling consiste à deviner le niveau de réflexion de l’adversaire pour se placer juste au-dessus. Mais en pratique, sauf face à un adversaire prévisible (par exemple, quelqu’un qui raisonne au premier degré), ce raisonnement tourne vite en boucle et dépend beaucoup du hasard.
 
 Revenons aux penaltys. Dans cet article, nous allons analyser la stratégie optimale du gardien face à un tireur, en utilisant la théorie des jeux. Nous nous concentrerons ici sur le gardien, mais le raisonnement pour le tireur est parfaitement symétrique.
 
@@ -153,4 +155,4 @@ Sans cet équilibre, le tireur pourrait adapter son jeu et marquer plus souvent,
 
 ## Conclusion
 
-Face à un tireur asymétrique (90% à droite, 60% à gauche), le gardien doit plonger 20% à gauche et 80% à droite pour atteindre l’équilibre de Nash. Ce n’est pas un simple pile ou face, mais une stratégie calculée qui neutralise l’avantage du tireur. En pratique, cela nécessite d’observer les tendances (comme Bertrand avec Liverpool) et d’utiliser des probabilités ajustées. La théorie des jeux transforme ainsi une intuition en une arme mathématique pour le gardien !
+Face à un tireur asymétrique (90% de réussite à droite, 60% de réussite à gauche), le gardien doit plonger 20% à gauche et 80% à droite pour atteindre l’équilibre de Nash. Ce n’est pas un simple pile ou face, mais une stratégie calculée qui neutralise l’avantage du tireur. En pratique, cela nécessite d’observer les tendances et d’utiliser des probabilités ajustées. La théorie des jeux transforme ainsi une intuition en une arme mathématique pour le gardien !
