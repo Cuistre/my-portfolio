@@ -83,7 +83,7 @@ export default function Header() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Rechercher..."
+                placeholder="Search..."
                 className="px-2 py-1 text-white placeholder-white bg-transparent w-24 md:w-auto focus:outline-none" // Texte et placeholder blancs
               />
               <button

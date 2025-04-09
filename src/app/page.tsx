@@ -7,7 +7,7 @@ export default async function Home() {
       <div className="pt-16">
         <FadeInBlur delay={0}>
           <h1 className="text-4xl font-bold text-center mb-12">
-            Bienvenue sur mon blog 24
+            Welcome on my blog !
           </h1>
         </FadeInBlur>
         <div className="max-w-5xl my-24 mx-auto px-4 flex flex-col md:flex-row gap-8">
@@ -25,10 +25,11 @@ export default async function Home() {
           <FadeInBlur delay={1.2}>
             <div className="md:w-1/2 flex items-center">
               <p className="text-xl leading-relaxed text-justify">
-                Salut ! Je suis Gaultier, développeur passionné et créateur de
-                contenu. Sur ce blog, je partage mes aventures dans le code, mes
-                projets, et quelques réflexions sur la tech. Prenez un café,
-                installez-vous, et explorez mes articles !
+                Hi there ! My name is Gaultier, javascript developer. I am
+                passionate about programming, algorithms and mathematics. So,
+                obviously, in that blog, I will write about things that I find
+                interesting, always related to programming, algorithms and
+                mathematics.
               </p>
             </div>
           </FadeInBlur>
