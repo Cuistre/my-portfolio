@@ -1,21 +1,23 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faUser,
   faBars,
   faTimes,
   faMagnifyingGlass,
-} from "@fortawesome/free-solid-svg-icons"; // Ajout de faMagnifyingGlass
+} from "@fortawesome/free-solid-svg-icons";
 import { signOut, useSession } from "next-auth/react";
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [language, setLanguage] = useState<"fr" | "en">("fr");
   const { data: session } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +29,16 @@ export default function Header() {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleLanguage = () => {
+    const newLanguage = language === "fr" ? "en" : "fr";
+    setLanguage(newLanguage);
+
+    // Si sur /blog, recharger avec le nouveau lang
+    if (pathname.startsWith("/blog")) {
+      router.push(`/blog?lang=${newLanguage}`);
+    }
   };
 
   return (
@@ -51,7 +63,7 @@ export default function Header() {
             Home
           </Link>
           <Link
-            href="/blog"
+            href={`/blog?lang=${language}`}
             className="block md:inline-block py-2 hover:text-indigo-500 transition-colors"
             onClick={() => setIsMenuOpen(false)}
           >
@@ -77,31 +89,27 @@ export default function Header() {
         <div className="flex items-center space-x-4 mt-4 md:mt-0">
           <form onSubmit={handleSearch} className="flex items-center">
             <div className="flex rounded-full overflow-hidden border border-indigo-300">
-              {" "}
-              {/* Bords arrondis */}
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search..."
-                className="px-2 py-1 text-white placeholder-white bg-transparent w-24 md:w-auto focus:outline-none" // Texte et placeholder blancs
+                className="px-2 py-1 text-white placeholder-white bg-transparent w-24 md:w-auto focus:outline-none"
               />
               <button
                 type="submit"
-                className="bg-indigo-500 px-2 py-1 hover:bgindigo-500 transition-colors"
+                className="bg-indigo-500 px-2 py-1 hover:bg-indigo-600 transition-colors"
               >
-                <FontAwesomeIcon icon={faMagnifyingGlass} className="w-4 h-4" />{" "}
-                {/* Icône loupe */}
+                <FontAwesomeIcon icon={faMagnifyingGlass} className="w-4 h-4" />
               </button>
             </div>
           </form>
-          {/* <button onClick={toggleLanguage} className="flex items-center">
-            <FontAwesomeIcon
-              icon={language === "fr" ? faFlag : faFlagUsa}
-              className="mr-1 w-4 h-4 md:w-5 md:h-5"
-            />
+          <button
+            onClick={toggleLanguage}
+            className="flex items-center hover:text-indigo-500 transition-colors"
+          >
             <span className="text-sm">{language === "fr" ? "FR" : "EN"}</span>
-          </button> */}
+          </button>
           {session?.user ? (
             <button
               onClick={() => signOut({ callbackUrl: "/" })}
